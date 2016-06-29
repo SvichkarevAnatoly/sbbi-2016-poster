@@ -1,4 +1,4 @@
-\documentclass[a1papper, portrait]{tikzposter}
+\documentclass[24pt, a1papper, portrait]{tikzposter}
 \usepackage[utf8]{inputenc}
 
 \usepackage{url}
@@ -6,11 +6,6 @@
 
 \usepackage{algorithmic}
 \usepackage[plain]{algorithm}
-
-% изменение размера шрифта > больше чем максимальный
-\makeatletter
-\input{theguy30pt.clo}
-\makeatother
 
 \title{Deep: optimizer with embedded interpreter}
 \author{A.~V.~Svichkarev, K.~N.~Kozlov}
@@ -27,20 +22,51 @@
 \maketitle
 
 \begin{columns}
-    \column{0.4}
+    \column{0.5}
     \block{1. Introduction}{
         Problem of parameter estimation
         for systems biology is challenging due:
         \begin{itemize}
-            \item[-] diversity of biomedical applications,
-            \item[-] large heterogeneous datasets,
-            \item[-] computationally expensive calculations
+            \item[\textbf{-}] diversity of biomedical applications,
+            \item[\textbf{-}] large heterogeneous datasets,
+            \item[\textbf{-}] computationally expensive calculations
                 using interpreted languages.
         \end{itemize}
         (P.~Mendes and D.~Kell, 1998)
     }
+    \block{EGFR endocytosis in HeLa cells}
+    {
+        The trajectory segmentation by fitting parameters of HMM with two states:
+        \begin{itemize}
+            \item[\textbf{-}] \textit{diffusion:} \textbf{black segments}
+            \item[\textbf{-}] \textit{directional motion:} {\color{green}\textbf{green segments}}
+        \end{itemize}
+        \begin{tikzfigure}
+            \includegraphics[width=0.42\textwidth, height=0.2\textheight]{images/track2}
+        \end{tikzfigure}
+    }
+    \block{Comparison of performance}
+    {
+        \begin{tikzfigure}
+            \includegraphics[width=0.45\textwidth]{images/m5_eng}
+        \end{tikzfigure}
+        \centering
+        The new method outperformed
+        the original one by the
+        factor of 4\\
+        in case of using 4
+        parallel threads and 4
+        interpreters.
+    }
+    \block{4. Discussion}{
+        \begin{enumerate}
+            \item Statistical significant speed up,
+            \item No significant increase RAM,
+            \item Different interpreted languages R, Octave, Python, etc.
+        \end{enumerate}
+    }
 
-    \column{0.6}
+    \column{0.5}
     \block{2. Differential Evolution\\Entirely Parallel method}{
         \begin{algorithm}[H]
             \begin{algorithmic}
@@ -60,7 +86,7 @@
                 \STATE{{\bf select} (offspring)}
                 \ENDFOR
                 \IF{The predefined number of iterations passed\\
-                to update scaling and crossover parameters,\\
+                    to update scaling and crossover parameters,\\
                 migrate individuals between branches}
                 \STATE{Do what is appropriate.}
                 \ENDIF
@@ -70,60 +96,25 @@
         \end{algorithm}
         (K.~Kozlov and A.~Samsonov, 2011).
     }
-\end{columns}
-
-\begin{columns}
-    \column{0.45}
     \block{3. Our approach}{
         Reduces the
         communication bottleneck
         between DEEP and objective function:
         \begin{itemize}
-            \item[-] Master-slave architecture,
-            \item[-] The pool of embedded identical interpreters-slaves,
-            \item[-] Asynchronous queue of tasks-master.
+            \item[\textbf{-}] Master-slave architecture,
+            \item[\textbf{-}] The pool of embedded identical interpreters-slaves,
+            \item[\textbf{-}] Asynchronous queue of tasks-master.
         \end{itemize}
     }
     \block{Tukey test\\of computation time}
     {
         \begin{tikzfigure}
-            \includegraphics[width=0.4\textwidth]{images/tukey_eng}
+            \includegraphics[width=0.45\textwidth]{images/tukey_eng}
         \end{tikzfigure}
-    }
-    \block{4. Discussion}{
-        \begin{enumerate}
-            \item Statistical significant speed up,
-            \item No significant increase RAM,
-            \item Different interpreted languages R, Octave, Python, etc.
-        \end{enumerate}
     }
     \block{Availability}{
-        DEEP: \url{http://deepmethod.sf.net}
-    }
-    \column{0.55}
-    \block{EGFR endocytosis in HeLa cells}
-    {
-        The trajectory segmentation by fitting parameters of HMM with two states:
-        \begin{itemize}
-            \item[-] \textit{diffusion:} \textbf{black segments}
-            \item[-] \textit{directional motion:} {\color{green}\textbf{green segments}}
-        \end{itemize}
-        \begin{tikzfigure}
-            \includegraphics[width=0.3\textwidth]{images/track2}
-        \end{tikzfigure}
-    }
-    \block{Comparison of performance}
-    {
-        \begin{tikzfigure}
-            \includegraphics[width=0.45\textwidth]{images/m5_eng}
-        \end{tikzfigure}
         \centering
-        The new method outperformed
-        the original one by the
-        factor of 4
-        in case of using 4
-        parallel threads and 4
-        interpreters.
+        \textbf{DEEP: \url{http://deepmethod.sf.net}}
     }
 \end{columns}
 
