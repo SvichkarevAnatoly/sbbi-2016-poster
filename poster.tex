@@ -2,6 +2,10 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage{url}
+\usepackage{indentfirst}
+
+\usepackage{algorithmic}
+\usepackage{algorithm}
 
 % изменение размера шрифта > больше чем максимальный
 \makeatletter
@@ -22,7 +26,6 @@
 
 \maketitle
 
-
 \begin{columns}
     \column{0.4}
     \block{1. Introduction}{
@@ -39,6 +42,36 @@
 
     \column{0.6}
     \block{2. Differential Evolution\\Entirely Parallel method}{
+        \begin{algorithm}[H]
+            \begin{algorithmic}
+                \STATE{INITIALIZATION:} The population is initialized randomly.
+                \STATE{Iteration = 0}
+                \WHILE{Stopping criterion is not met}
+                \STATE{Iteration = Iteration + 1}
+                \STATE{RECOMBINATION:}
+                \IF{The predefined number of iterations $\Xi$ passed.}
+                \STATE{Make Scatter Search Step}
+                \ELSE
+                \FORALL{individuals in population}
+                \STATE{{\bf recombine} (individual)}
+                \ENDFOR
+                \ENDIF
+                \STATE{EVALUATION:}
+                \STATE{{\bf objfunc} (population)}
+                \STATE{SELECTION:}
+                \FORALL{offsprings}
+                \STATE{{\bf select} (offspring)}
+                \ENDFOR
+                \STATE{ADAPTATION:}
+                \STATE{Update scaling and crossover parameters.}
+                \IF{The predefined number of iterations $\Theta$ passed.}
+                \STATE{Substitute $\Psi$ oldest individuals with the best ones.}
+                \ENDIF
+                \STATE{Sort the population members by age and by quality.}
+                \ENDWHILE
+            \end{algorithmic}
+        \end{algorithm}
+
         (K.~Kozlov and A.~Samsonov, 2011).
     }
 \end{columns}
@@ -72,13 +105,15 @@
         DEEP: \url{http://deepmethod.sf.net}
     }
     \column{0.55}
-    \block{Trajectory segmentation task}
+    \block{EGFR endocytosis in HeLa cells}
     {
-        \centering
-        Macromolecular intracellular
-        trajectory segmentation.
+        The trajectory segmentation by fitting parameters of HMM with two states:
+        \begin{itemize}
+            \item[-] \textit{diffusion:} \textbf{black segments}
+            \item[-] \textit{directional motion:} {\color{green}\textbf{green segments}}
+        \end{itemize}
         \begin{tikzfigure}
-            \includegraphics[width=0.3\textwidth]{images/track}
+            \includegraphics[width=0.3\textwidth]{images/track2}
         \end{tikzfigure}
     }
     \block{Comparison of performance}
