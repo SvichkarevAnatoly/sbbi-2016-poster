@@ -1,9 +1,12 @@
-\documentclass[25pt, a2papper, portrait]{tikzposter}
+\documentclass[a1papper, portrait]{tikzposter}
 \usepackage[utf8]{inputenc}
 
-\usepackage{blindtext}
-\usepackage{comment}
 \usepackage{url}
+
+% изменение размера шрифта > больше чем максимальный
+\makeatletter
+\input{theguy30pt.clo}
+\makeatother
 
 \title{Deep: optimizer with embedded interpreter}
 \author{A.~V.~Svichkarev, K.~N.~Kozlov}
@@ -21,112 +24,76 @@
 
 
 \begin{columns}
-    \column{0.6}
-    \block{Differential Evolution}
-    {
-        \begin{tikzfigure}
-            \includegraphics[width=0.45\textwidth]{images/DE}
-        \end{tikzfigure}
+    \column{0.4}
+    \block{1. Introduction}{
+        Problem of parameter estimation
+        for systems biology is challenging due:
+        \begin{itemize}
+            \item[-] diversity of biomedical applications,
+            \item[-] large heterogeneous datasets,
+            \item[-] computationally expensive calculations
+                using interpretered languages.
+        \end{itemize}
+        (P.~Mendes and D.~Kell, 1998)
     }
 
-    \column{0.4}
-    \block{Introduction}{
-        The problem of parameter estimation
-        for data-driven models in systems biology
-        is challenging due to the diversity
-        of biomedical applications and
-        the necessity to treat large sets of
-        heterogeneous data in specialized formats.
-        These tasks usually require
-        specialized computer environment
-        and interpreted language for
-        mathematical modelling.
-        However, this approach makes
-        numerical estimation of parameters
-        of a mathematical model extremely
-        computationally expensive.
-    }
-    \block{Problem}{
-        Here we propose
-        an enhancement to the
-        Differential Evolution Entirely Parallel (DEEP) method
-        developed recently.
-        Our approach reduces the
-        communication bottleneck
-        between DEEP and objective function
-        that describes the deviation
-        of model solution
-        from the data.
-        An interpreter needed to
-        calculate model solution
-        is embedded into
-        DEEP that uses
-        master-slave architecture.
-        A master process
-        organizes an asynchronous queue
-        of tasks which are run
-        in the pool of
-        already started identical interpreters.
+    \column{0.6}
+    \block{2. Differential Evolution\\Entirely Parallel method}{
+        (K.~Kozlov and A.~Samsonov, 2011).
     }
 \end{columns}
 
-
 \begin{columns}
     \column{0.45}
-    \block{Solution}{
-        The developed approach was
-        applied to the biological problem
-        of macromolecular intracellular
+    \block{3. Our approach}{
+        Reduces the
+        communication bottleneck
+        between DEEP and objective function:
+        \begin{itemize}
+            \item[-] Master-slave architecture,
+            \item[-] The pool of embedded identical interpreters-slaves,
+            \item[-] Asynchronous queue of tasks-master.
+        \end{itemize}
+    }
+    \block{Tukey test\\of computation time}
+    {
+        \begin{tikzfigure}
+            \includegraphics[width=0.4\textwidth]{images/tukey}
+        \end{tikzfigure}
+    }
+    \block{4. Discussion}{
+        \begin{enumerate}
+            \item Statistical significant speed up,
+            \item No significant increase RAM,
+            \item Different interpreted languages R, Octave, Python, etc,
+        \end{enumerate}
+    }
+    \block{Availability}{
+        DEEP: \url{http://deepmethod.sf.net}
+    }
+    \column{0.55}
+    \block{Trajectory segmentation task}
+    {
+        \centering
+        Macromolecular intracellular
         trajectory segmentation.
-        We demonstrated the efficiency
-        of improved method
-        in comparison with the previous one.
-        We performed numerical experiments
-        with the number of threads
-        in the range from 1 to 8.
+        \begin{tikzfigure}
+            \includegraphics[width=0.3\textwidth]{images/track}
+        \end{tikzfigure}
+    }
+    \block{Comparison of performance}
+    {
+        \begin{tikzfigure}
+            \includegraphics[width=0.45\textwidth]{images/m5_eng}
+        \end{tikzfigure}
+        \centering
         The new method outperformed
         the original one by the
         factor of 4
         in case of using 4
         parallel threads and 4
         interpreters.
-        The developed approach can be applied to
-        such interpreted languages like
-        R, Octave, Python etc.
-    }
-    \block{95\% confidence intervals Tukey test}
-    {
-        \begin{tikzfigure}
-            \includegraphics[width=0.4\textwidth]{images/tukey}
-        \end{tikzfigure}
-    }
-    \block{Conclusion}{
-        Obtained results allowed us
-        to conclude that
-        the developed approach
-        do not lead to significant increase
-        in RAM allocation thus making
-        it possible to use
-        more complex objective functions.
-        An improved DEEP method ready
-        to be used as the global optimizer
-        in the field of systems biology
-        and bioinformatics.
-    }
-    \column{0.55}
-    \block{Trajectory segmentation task}
-    {
-        \begin{tikzfigure}
-            \includegraphics[width=0.3\textwidth]{images/track}
-        \end{tikzfigure}
-    }
-    \block{Comparison of optimization}
-    {
-        \begin{tikzfigure}
-            \includegraphics[width=0.45\textwidth]{images/m5}
-        \end{tikzfigure}
     }
 \end{columns}
-
 
 \end{document}
