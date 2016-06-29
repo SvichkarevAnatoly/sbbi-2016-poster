@@ -5,7 +5,7 @@
 \usepackage{indentfirst}
 
 \usepackage{algorithmic}
-\usepackage{algorithm}
+\usepackage[plain]{algorithm}
 
 % изменение размера шрифта > больше чем максимальный
 \makeatletter
@@ -45,33 +45,29 @@
         \begin{algorithm}[H]
             \begin{algorithmic}
                 \STATE{INITIALIZATION:} The population is initialized randomly.
-                \STATE{Iteration = 0}
                 \WHILE{Stopping criterion is not met}
-                \STATE{Iteration = Iteration + 1}
                 \STATE{RECOMBINATION:}
-                \IF{The predefined number of iterations $\Xi$ passed.}
-                \STATE{Make Scatter Search Step}
-                \ELSE
                 \FORALL{individuals in population}
                 \STATE{{\bf recombine} (individual)}
                 \ENDFOR
-                \ENDIF
-                \STATE{EVALUATION:}
-                \STATE{{\bf objfunc} (population)}
+                \STATE{SCORE:}
+                \FORALL{offsprings}
+                \STATE{Calculate the quality function {\it F}
+                and penalty function {\it P}.}
+                \ENDFOR
                 \STATE{SELECTION:}
                 \FORALL{offsprings}
                 \STATE{{\bf select} (offspring)}
                 \ENDFOR
-                \STATE{ADAPTATION:}
-                \STATE{Update scaling and crossover parameters.}
-                \IF{The predefined number of iterations $\Theta$ passed.}
-                \STATE{Substitute $\Psi$ oldest individuals with the best ones.}
+                \IF{The predefined number of iterations passed\\
+                to update scaling and crossover parameters,\\
+                migrate individuals between branches}
+                \STATE{Do what is appropriate.}
                 \ENDIF
-                \STATE{Sort the population members by age and by quality.}
+                \STATE{Select the best and the oldest individual.}
                 \ENDWHILE
             \end{algorithmic}
         \end{algorithm}
-
         (K.~Kozlov and A.~Samsonov, 2011).
     }
 \end{columns}
